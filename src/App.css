@@ -1,3 +1,25 @@
+body {
+  background-color: #ffe142;
+  font-family: "Noto sans", sans-serif;
+}
+
 .card {
-  background-color: #eeeef2 !important;
+  /* background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px) !important;
+  &:hover {
+    background-color: rgba(233, 104, 61, 0.9);
+  } */
+  background-color: #212529 !important;
+  color: #ffe142 !important;
+}
+
+::placeholder {
+  color: #ffe142 !important;
+}
+
+.btn-dark {
+  background-color: #212529 !important;
+  &:hover {
+    background-color: #000000 !important;
+  }
 }
