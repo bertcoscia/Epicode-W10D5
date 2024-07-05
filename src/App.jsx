@@ -1,11 +1,19 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Forecast from "./components/Forecast";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-center mt-5">Hello</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/forecast/:lat/:lon" element={<Forecast />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
