@@ -39,7 +39,7 @@ const Home = () => {
             <Form.Control
               placeholder="ex. London, Rome, Moscow..."
               aria-label="City"
-              className="bg-dark rounded"
+              className="bg-dark rounded border-0"
               onChange={event => {
                 setCity(event.target.value);
               }}

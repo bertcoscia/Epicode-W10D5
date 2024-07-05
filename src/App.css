@@ -23,3 +23,7 @@ body {
     background-color: #000000 !important;
   }
 }
+
+.forecast-card:hover {
+  background-color: #181c1f !important;
+}
