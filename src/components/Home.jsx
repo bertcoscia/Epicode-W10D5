@@ -57,7 +57,7 @@ const Home = () => {
                 <p className="lead">
                   {location.country} {location.state && <span> - {location.state}</span>}
                 </p>
-                <Link to={`/forecats/${location.lat}/${location.lon}`} className="btn btn-info">
+                <Link to={`/forecast/${location.lat}/${location.lon}`} className="btn btn-info">
                   Forecast
                 </Link>
               </ListGroup.Item>
