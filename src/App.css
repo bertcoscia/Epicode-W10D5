@@ -36,5 +36,5 @@ button:hover {
 }
 
 .backBtn:hover {
-  background-color: #ffe142 !important;
+  fill: #000000 !important;
 }

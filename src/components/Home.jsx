@@ -25,7 +25,7 @@ const Home = () => {
       .catch(error => console.log(error));
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
     fetchGeocoding(city);
   };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 const url = "https://api.openweathermap.org/data/2.5/forecast?";
 const lat = "lat=";
@@ -7,15 +7,10 @@ const lon = "&lon=";
 const auth = "&appid=8237f0d7fd25ebaed878a08b3afbc798";
 
 const NextDays = props => {
-  const [forecast, setForecast] = useState(null);
+  const [forecasts, setForecasts] = useState(null);
   const coordinates = props.coordinates;
 
-  const getDate = dt => {
-    const day = new Date(dt);
-    return day.toLocaleDateString();
-  };
-
-  const fetchForecast = () => {
+  const fetchForecasts = () => {
     fetch(`${url + lat + coordinates.lat + lon + coordinates.lon + auth}`)
       .then(response => {
         if (response.ok) {
@@ -24,35 +19,58 @@ const NextDays = props => {
           throw new Error("Couldn't get data - fetchForecast @NextDays.jsx");
         }
       })
-      .then(result => {
-        const forecast = result.list;
-        setForecast(forecast);
-        /* console.log(forecast.slice(0, 5));
-        console.log(forecast[0].dt_txt); */
+      .then(data => {
+        const forecasts = data.list;
+        setForecasts(forecasts);
       })
       .catch(error => console.log(error));
   };
 
+  const divideByDay = () => {
+    const days = {};
+
+    forecasts.forEach(forecast => {
+      const date = new Date(forecast.dt * 1000);
+      const forecastDay = String(date.getDate()).padStart(2, "0");
+      const forecastMonth = String(date.getMonth() + 1).padStart(2, "0");
+      const forecastWeekDay = new Intl.DateTimeFormat("en-GB", { weekday: "long" }).format(date);
+      const forecastDate = `${forecastWeekDay} ${forecastDay}/${forecastMonth}`;
+      days[forecastDate] ? {} : (days[forecastDate] = []);
+      days[forecastDate].push(forecast);
+    });
+
+    return days;
+  };
+
+  const forecastByDay = forecasts ? divideByDay() : {};
+
   useEffect(() => {
-    fetchForecast();
+    fetchForecasts();
+    console.log(forecastByDay);
   }, []);
 
   return (
     <Container className="my-3">
-      <h1>Forecast for the next five days</h1>
-      {forecast ? (
-        <div className="d-flex justify-content-between">
-          {forecast.slice(0, 5).map(timestamp => (
-            <div key={timestamp.dt_txt} className="card d-flex flex-column text-center py-3 forecast-card" style={{ width: "18%", cursor: "pointer" }}>
-              <h3>{timestamp.dt_txt.substring(11, 16)}</h3>
-              <img src={`https://openweathermap.org/img/wn/${timestamp.weather[0].icon}@2x.png`} alt={timestamp.weather[0].main} style={{ width: "100px" }} className="mx-auto" />
-              <small>{timestamp.weather[0].main}</small>
-              {Math.round(timestamp.main.temp - 273)}&deg;
-              <Container className="d-flex justify-content-center">
-                <small className="me-3">H: {Math.round(timestamp.main.temp_max - 273)}&deg;</small>
-                <small>L: {Math.round(timestamp.main.temp_min - 273)}&deg;</small>
-              </Container>
-            </div>
+      {forecasts ? (
+        <div className="d-flex flex-wrap">
+          {Object.keys(forecastByDay).map(day => (
+            <>
+              <h3>{day}</h3>
+              <div key={day} className="d-flex justify-content-between text-center py-3 w-100">
+                {forecastByDay[day].map((forecast, index) => (
+                  <div key={index} className="card forecast-card p-3">
+                    <h4>{forecast.dt_txt.substring(11, 16)}</h4>
+                    <img src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`} alt={forecast.weather[0].main} style={{ width: "100px" }} className="mx-auto" />
+                    <small>{forecast.weather[0].main}</small>
+                    {Math.round(forecast.main.temp - 273)}&deg;
+                    <Container className="d-flex justify-content-center">
+                      <small className="me-3">H: {Math.round(forecast.main.temp_max - 273)}&deg;</small>
+                      <small>L: {Math.round(forecast.main.temp_min - 273)}&deg;</small>
+                    </Container>
+                  </div>
+                ))}
+              </div>
+            </>
           ))}
         </div>
       ) : (
