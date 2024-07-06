@@ -1,6 +1,7 @@
 body {
   background-color: #ffe142;
   font-family: "Noto sans", sans-serif;
+  position: relative;
 }
 
 .card {
@@ -26,4 +27,12 @@ body {
 
 .forecast-card:hover {
   background-color: #181c1f !important;
+}
+
+button:hover {
+  background-color: #000000 !important;
+}
+
+.backBtn:hover {
+  background-color: #ffe142 !important;
 }

@@ -15,6 +15,8 @@ const Forecast = () => {
 
   const [weather, setWeather] = useState(null);
 
+  const [localHour, setLocalHour] = useState("");
+
   useEffect(() => {
     setCoordinates(params);
     if (coordinates) {
@@ -33,12 +35,33 @@ const Forecast = () => {
       })
       .then(weather => {
         setWeather(weather);
+        console.log(weather);
+        // Estrarre il timestamp e il fuso orario
+        const timestamp = weather.dt;
+        const timezoneOffset = weather.timezone * 1000; // Convertire in millisecondi
+
+        // Convertire il timestamp in un oggetto Date
+        const dateUtc = new Date(timestamp * 1000);
+
+        // Aggiungere il fuso orario per ottenere l'ora locale
+        const dateLocal = new Date(dateUtc.getTime() + timezoneOffset);
+
+        // Estrarre il giorno, il mese, l'anno, l'ora e i minuti
+        const day = String(dateLocal.getUTCDate()).padStart(2, "0");
+        const month = String(dateLocal.getUTCMonth() + 1).padStart(2, "0");
+        const hours = String(dateLocal.getUTCHours()).padStart(2, "0");
+        const minutes = String(dateLocal.getUTCMinutes()).padStart(2, "0");
+        const dayName = new Intl.DateTimeFormat("en-GB", { weekday: "long" }).format(dateLocal);
+
+        // Creare la stringa formattata
+        const currentTime = `${dayName} ${day}/${month} - ${hours}:${minutes}`;
+        setLocalHour(currentTime);
       });
   };
 
   return (
     <div className="mt-5">
-      <Link to={"/"} className="btn">
+      <Link to={"/"} className="btn backBtn">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-arrow-left-circle" viewBox="0 0 16 16">
           <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
         </svg>
@@ -46,10 +69,15 @@ const Forecast = () => {
       {weather ? (
         <>
           <Container className="p-3">
-            <p className="text-center">
+            <div className="d-flex flex-column justify-content-center align-items-center">
               <strong className="display-1">{weather.name}</strong>
-              <span className="display-6 ms-3">{weather.sys.country}</span>
-            </p>
+              <small className="lead mb-3">{weather.sys.country}</small>
+              {localHour !== "" && (
+                <div className="d-inline-block bg-dark rounded-pill px-3" style={{ color: "#FFE142" }}>
+                  {localHour}
+                </div>
+              )}
+            </div>
             <div className="d-flex flex-column align-items-center">
               <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].main} />
               <p>{weather.weather[0].main}</p>

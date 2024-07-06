@@ -27,8 +27,8 @@ const NextDays = props => {
       .then(result => {
         const forecast = result.list;
         setForecast(forecast);
-        console.log(forecast.slice(0, 5));
-        console.log(forecast[0].dt_txt);
+        /* console.log(forecast.slice(0, 5));
+        console.log(forecast[0].dt_txt); */
       })
       .catch(error => console.log(error));
   };
@@ -43,7 +43,7 @@ const NextDays = props => {
       {forecast ? (
         <div className="d-flex justify-content-between">
           {forecast.slice(0, 5).map(timestamp => (
-            <div key={timestamp.dt_txt} className="card d-flex flex-column text-center py-3 forecast-card" style={{ width: "18%" }}>
+            <div key={timestamp.dt_txt} className="card d-flex flex-column text-center py-3 forecast-card" style={{ width: "18%", cursor: "pointer" }}>
               <h3>{timestamp.dt_txt.substring(11, 16)}</h3>
               <img src={`https://openweathermap.org/img/wn/${timestamp.weather[0].icon}@2x.png`} alt={timestamp.weather[0].main} style={{ width: "100px" }} className="mx-auto" />
               <small>{timestamp.weather[0].main}</small>
