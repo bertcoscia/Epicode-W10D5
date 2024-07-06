@@ -61,7 +61,7 @@ const Forecast = () => {
   };
 
   return (
-    <div className="mt-5">
+    <div className="my-5">
       <Link to={"/"} className="btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#212529" className="bi bi-arrow-left-circle backBtn" viewBox="0 0 16 16">
           <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
@@ -81,22 +81,22 @@ const Forecast = () => {
             </div>
             <div className="d-flex flex-column align-items-center">
               <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt={weather.weather[0].main} />
-              <p>{weather.weather[0].main}</p>
+              <p className="fs-2">{weather.weather[0].main}</p>
             </div>
             <div className="text-center">
-              <h2 className="fs-1">{Math.round(weather.main.temp - 273)}&deg;</h2>
+              <h1 className="display-1">{Math.round(weather.main.temp - 273)}&deg;</h1>
               <p className="d-inline me-3">H: {Math.round(weather.main.temp_max - 273)}&deg;</p>
               <p className="d-inline">L: {Math.round(weather.main.temp_min - 273)}&deg;</p>
             </div>
-            <div className="d-flex justify-content-around mt-5 bg-dark py-4 rounded forecast-card" style={{ color: "#FFE142" }}>
-              <div className="d-flex flex-column align-items-center row-gap-3" style={{ width: "33.33%" }}>
+            <div className="d-flex justify-content-around my-5  py-4 rounded" style={{ color: "#FFE142" }}>
+              <div className="d-flex flex-column align-items-center row-gap-3 bg-dark rounded px-5 py-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="currentColor" className="bi bi-wind" viewBox="0 0 16 16">
                   <path d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5" />
                 </svg>
                 {weather.wind.speed}m/s
                 <small className="">Wind</small>
               </div>
-              <div className="d-flex flex-column align-items-center row-gap-3" style={{ width: "33.33%" }}>
+              <div className="d-flex flex-column align-items-center row-gap-3 bg-dark rounded px-5 py-3">
                 {" "}
                 <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="currentColor" className="bi bi-thermometer-half" viewBox="0 0 16 16">
                   <path d="M9.5 12.5a1.5 1.5 0 1 1-2-1.415V6.5a.5.5 0 0 1 1 0v4.585a1.5 1.5 0 0 1 1 1.415" />
@@ -105,7 +105,7 @@ const Forecast = () => {
                 {Math.round(weather.main.feels_like - 273)}&deg;
                 <small>Feels like</small>
               </div>
-              <div className="d-flex flex-column align-items-center row-gap-3" style={{ width: "33.33%" }}>
+              <div className="d-flex flex-column align-items-center row-gap-3 bg-dark rounded px-5 py-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="currentColor" className="bi bi-droplet-half" viewBox="0 0 16 16">
                   <path
                     fillRule="evenodd"
