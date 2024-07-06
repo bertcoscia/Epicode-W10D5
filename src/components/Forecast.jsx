@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import NextDays from "./NextDays";
 
 const url = "https://api.openweathermap.org/data/2.5/weather?";
@@ -36,24 +36,25 @@ const Forecast = () => {
       .then(weather => {
         setWeather(weather);
         console.log(weather);
-        // Estrarre il timestamp e il fuso orario
+        // prendo il timestamp e la timezone
         const timestamp = weather.dt;
-        const timezoneOffset = weather.timezone * 1000; // Convertire in millisecondi
+        const timezoneOffset = weather.timezone * 1000;
 
-        // Convertire il timestamp in un oggetto Date
+        // converto il timestamp in un oggetto Date
         const dateUtc = new Date(timestamp * 1000);
 
-        // Aggiungere il fuso orario per ottenere l'ora locale
+        // aggiungo il fuso orario per ottenere l'ora locale
         const dateLocal = new Date(dateUtc.getTime() + timezoneOffset);
 
-        // Estrarre il giorno, il mese, l'anno, l'ora e i minuti
+        // estraggo il giorno, il mese, l'ora e i minuti (uso padStart per aggiungere lo 0 )
         const day = String(dateLocal.getUTCDate()).padStart(2, "0");
         const month = String(dateLocal.getUTCMonth() + 1).padStart(2, "0");
         const hours = String(dateLocal.getUTCHours()).padStart(2, "0");
         const minutes = String(dateLocal.getUTCMinutes()).padStart(2, "0");
+        // estraggo il nome del giorno
         const dayName = new Intl.DateTimeFormat("en-GB", { weekday: "long" }).format(dateLocal);
 
-        // Creare la stringa formattata
+        // creo la stringa formattata
         const currentTime = `${dayName} ${day}/${month} - ${hours}:${minutes}`;
         setLocalHour(currentTime);
       });
@@ -73,7 +74,7 @@ const Forecast = () => {
               <strong className="display-1">{weather.name}</strong>
               <small className="lead mb-3">{weather.sys.country}</small>
               {localHour !== "" && (
-                <div className="d-inline-block bg-dark rounded-pill px-3" style={{ color: "#FFE142" }}>
+                <div className="bg-dark rounded-pill px-3" style={{ color: "#FFE142" }}>
                   {localHour}
                 </div>
               )}
@@ -83,7 +84,7 @@ const Forecast = () => {
               <p>{weather.weather[0].main}</p>
             </div>
             <div className="text-center">
-              <h2>{Math.round(weather.main.temp - 273)}&deg;</h2>
+              <h2 className="fs-1">{Math.round(weather.main.temp - 273)}&deg;</h2>
               <p className="d-inline me-3">H: {Math.round(weather.main.temp_max - 273)}&deg;</p>
               <p className="d-inline">L: {Math.round(weather.main.temp_min - 273)}&deg;</p>
             </div>

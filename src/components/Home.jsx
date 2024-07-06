@@ -32,12 +32,12 @@ const Home = () => {
 
   return (
     <div className="my-5">
-      <h1 className="text-center">LaRochelle Weather</h1>
+      <h1 className="text-center">EpiWeather ☀️</h1>
       <Container className="my-5">
         <Form onSubmit={event => handleSubmit(event)} className="w-50 mx-auto">
           <InputGroup>
             <Form.Control
-              placeholder="ex. London, Rome, Moscow..."
+              placeholder="London, Rome, Moscow..."
               aria-label="City"
               className="bg-dark rounded border-0"
               onChange={event => {
