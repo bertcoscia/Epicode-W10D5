@@ -53,9 +53,9 @@ const NextDays = props => {
     <Container className="my-3">
       {forecasts ? (
         <div className="d-flex flex-wrap">
-          {Object.keys(forecastByDay).map(day => (
+          {Object.keys(forecastByDay).map((day, index) => (
             <>
-              <h3>{day}</h3>
+              <h3 key={index}>{day}</h3>
               <div key={day} className="d-flex justify-content-between text-center py-3 w-100">
                 {forecastByDay[day].map((forecast, index) => (
                   <div key={index} className="card forecast-card p-3">

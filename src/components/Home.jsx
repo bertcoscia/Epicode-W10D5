@@ -53,18 +53,27 @@ const Home = () => {
       </Container>
       <Container>
         <ListGroup>
-          {locations &&
-            locations.map(location => (
-              <ListGroup.Item key={location.lat + location.lon} className="text-center my-3 mx-auto w-50 p-3 border-0" style={{ backgroundColor: "inherit" }}>
-                <h2>{location.name}</h2>
-                <p className="lead">
-                  {location.country} {location.state && <span> - {location.state}</span>}
-                </p>
-                <Link to={`/forecast/${location.lat}/${location.lon}`} className="btn btn-dark" style={{ color: "#FFE142" }}>
-                  Forecast
-                </Link>
-              </ListGroup.Item>
-            ))}
+          {locations ? (
+            locations.length > 0 ? (
+              locations.map(location => (
+                <ListGroup.Item key={location.lat + location.lon} className="text-center my-3 mx-auto w-50 p-3 border-0" style={{ backgroundColor: "inherit" }}>
+                  <h2>{location.name}</h2>
+                  <p className="lead">
+                    {location.country} {location.state && <span> - {location.state}</span>}
+                  </p>
+                  <Link to={`/forecast/${location.lat}/${location.lon}`} className="btn btn-dark" style={{ color: "#FFE142" }}>
+                    Forecast
+                  </Link>
+                </ListGroup.Item>
+              ))
+            ) : (
+              <h2 className="text-center mt-5">
+                We could not find the city you searched for <br /> Please try to search for another city
+              </h2>
+            )
+          ) : (
+            <h2 className="text-center mt-5">Search for a city</h2>
+          )}
         </ListGroup>
       </Container>
     </div>
